@@ -26,6 +26,7 @@
 
 body {
   background: var(--bg-url) no-repeat top center/cover;
+  height: 100vh; /*o tamanho do fundo vai 100% do viewport height*/
 }
 
 body * {
@@ -33,7 +34,10 @@ body * {
   color: var(--text-color);
 }
 #container {
-  width: 360px;
+  /*width: 360px;*/
+  /*width: 100%; - só que desse jeito, até os botões vao ocupar o tamanho de 100%*/
+  width: 100%;
+  max-width: 588px; /*até que alcance o maximo de 588*/
   margin: 56px auto 0px;
   padding: 0 24px;
 }
@@ -72,11 +76,17 @@ body * {
   left: 0;
   z-index: 1;
   transform: translateY(-50%);
+
+  animation: slide-out 0.4s; /*nao precisa colocar o forwards, pois a config original já é no left*/
 }
 
 .light #switch button {
-  right: 0;
-  left: initial; /*volta para a maneira inicial*/
+  animation: slide-in 0.4s forwards;
+  /*forwards -> mantem as propriedades do final da animação. senão volta pra left 0*/
+}
+
+#switch button:hover {
+  outline: 8px solid var(--highlight-color);
 }
 
 #switch span {
@@ -143,4 +153,32 @@ footer {
   padding: 24px 0;
   text-align: center;
   font-size: 14px;
+}
+
+/*media queries*/
+@media (min-width: 700px) {
+  /*de largura minima 700 pra cima, aplicar essas regras*/
+  :root {
+    --bg-url: url(./assets/bg-desktop.jpg);
+  }
+  .light {
+    --bg-url: url(./assets/bg-desktop-light.jpg);
+  }
+}
+/*animacao - slide-in pode ser qualquer nome*/
+@keyframes slide-in {
+  from {
+    left: 0;
+  }
+  to {
+    left: 50%;
+  }
+}
+@keyframes slide-out {
+  from {
+    left: 50%;
+  }
+  to {
+    left: 0;
+  }
 }
